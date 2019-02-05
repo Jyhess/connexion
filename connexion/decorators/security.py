@@ -176,8 +176,7 @@ def verify_authorization_token(request, token_info_func):
     token_info = token_info_func(token)
     if token_info is None:
         raise OAuthResponseProblem(
-            description='Provided token is not valid',
-            token_response=None
+            description='Provided token is not valid'
         )
 
     return token_info
@@ -227,8 +226,7 @@ def verify_basic(basic_info_func):
         token_info = basic_info_func(username, password, required_scopes=required_scopes)
         if token_info is None:
             raise OAuthResponseProblem(
-                description='Provided authorization is not valid',
-                token_response=None
+                description='Provided authorization is not valid'
             )
         return token_info
 
@@ -268,8 +266,7 @@ def verify_apikey(apikey_info_func, loc, name):
         token_info = apikey_info_func(apikey, required_scopes=required_scopes)
         if token_info is None:
             raise OAuthResponseProblem(
-                description='Provided apikey is not valid',
-                token_response=None
+                description='Provided apikey is not valid'
             )
         return token_info
 
