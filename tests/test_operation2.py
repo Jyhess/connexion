@@ -6,11 +6,11 @@ import types
 import mock
 import pytest
 from connexion.apis.flask_api import Jsonifier
-from connexion.decorators.security import SecurityHandlerFactory
 from connexion.exceptions import InvalidSpecification
 from connexion.json_schema import resolve_refs
 from connexion.operations import Swagger2Operation
 from connexion.resolver import Resolver
+from connexion.security import SecurityHandlerFactory
 
 TEST_FOLDER = pathlib.Path(__file__).parent
 
@@ -243,10 +243,10 @@ def make_operation(op, definitions=True, parameters=True):
     return resolve_refs(new_op)["wrapper"]
 
 
-def test_operation(api, monkeypatch):
+def test_operation(api):
     dummy = object()
     verify_oauth = mock.MagicMock(return_value=dummy)
-    monkeypatch.setattr('connexion.operations.secure.SecurityHandlerFactory.verify_oauth', verify_oauth)
+    api.security_handler_factory.verify_oauth = verify_oauth
 
     op_spec = make_operation(OPERATION1)
     operation = Swagger2Operation(api=api,
@@ -336,10 +336,10 @@ def test_operation_composed_definition(api):
     assert operation.body_schema == expected_body_schema
 
 
-def test_operation_local_security_oauth2(api, monkeypatch):
+def test_operation_local_security_oauth2(api):
     dummy = object()
     verify_oauth = mock.MagicMock(return_value=dummy)
-    monkeypatch.setattr('connexion.operations.secure.SecurityHandlerFactory.verify_oauth', verify_oauth)
+    api.security_handler_factory.verify_oauth = verify_oauth
 
     op_spec = make_operation(OPERATION8)
     operation = Swagger2Operation(api=api,
@@ -373,10 +373,10 @@ def test_operation_local_security_oauth2(api, monkeypatch):
     assert operation.body_schema == expected_body_schema
 
 
-def test_operation_local_security_duplicate_token_info(api, monkeypatch):
+def test_operation_local_security_duplicate_token_info(api):
     dummy = object()
     verify_oauth = mock.MagicMock(return_value=dummy)
-    monkeypatch.setattr('connexion.operations.secure.SecurityHandlerFactory.verify_oauth', verify_oauth)
+    api.security_handler_factory.verify_oauth = verify_oauth
 
     op_spec = make_operation(OPERATION8)
     operation = Swagger2Operation(api=api,

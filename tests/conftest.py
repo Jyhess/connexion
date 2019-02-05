@@ -54,7 +54,7 @@ def oauth_requests(monkeypatch):
                 return FakeResponse(200, '{"uid": "test-user", "scopes": ["myscope", "otherscope"]}')
         return url
 
-    monkeypatch.setattr('connexion.decorators.security.session.get', fake_get)
+    monkeypatch.setattr('connexion.security.security_handler_factory.session.get', fake_get)
 
 
 @pytest.fixture

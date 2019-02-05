@@ -3,8 +3,8 @@ import json
 import requests
 
 import pytest
-from connexion.decorators.security import SecurityHandlerFactory
 from connexion.exceptions import (OAuthResponseProblem, OAuthScopeProblem)
+from connexion.security import SecurityHandlerFactory
 from mock import MagicMock
 
 
@@ -12,7 +12,7 @@ def test_get_tokeninfo_url(monkeypatch):
     env = {}
     monkeypatch.setattr('os.environ', env)
     logger = MagicMock()
-    monkeypatch.setattr('connexion.decorators.security.logger', logger)
+    monkeypatch.setattr('connexion.security.security_handler_factory.logger', logger)
     security_def = {}
     assert SecurityHandlerFactory.get_tokeninfo_func(security_def) is None
     logger.warn.assert_not_called()
@@ -58,7 +58,7 @@ def test_verify_oauth_scopes_remote(monkeypatch):
 
     session = MagicMock()
     session.get = get_tokeninfo_response
-    monkeypatch.setattr('connexion.decorators.security.session', session)
+    monkeypatch.setattr('connexion.security.security_handler_factory.session', session)
 
     with pytest.raises(OAuthScopeProblem, message="Provided token doesn't have the required scope"):
         wrapped_func(request, ['admin'])
