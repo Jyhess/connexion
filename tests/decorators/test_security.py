@@ -3,7 +3,7 @@ import json
 import requests
 
 import pytest
-from connexion.exceptions import (OAuthResponseProblem, OAuthScopeProblem)
+from connexion.exceptions import OAuthResponseProblem, OAuthScopeProblem
 from mock import MagicMock
 
 

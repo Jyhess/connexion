@@ -10,8 +10,9 @@ from connexion.apis.abstract import AbstractAPI
 from connexion.decorators.produces import NoContent
 from connexion.handlers import AuthErrorHandler
 from connexion.lifecycle import ConnexionRequest, ConnexionResponse
+from connexion.security.flask_security_handler_factory import \
+    FlaskSecurityHandlerFactory
 from connexion.utils import Jsonifier, is_json_mimetype, yamldumper
-from connexion.security.flask_security_handler_factory import FlaskSecurityHandlerFactory
 
 logger = logging.getLogger('connexion.apis.flask_api')
 
