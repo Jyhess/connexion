@@ -131,6 +131,8 @@ class AbstractURIParser(BaseDecorator):
                 try:
                     return md.to_dict(flat=False)
                 except AttributeError:
+                    if hasattr(md, 'getall'): # aiohttp multidict
+                        return {k: md.getall(k) for k in md.keys()}
                     return dict(md.items())
 
             query = coerce_dict(request.query)

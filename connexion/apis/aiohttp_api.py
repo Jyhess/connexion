@@ -204,8 +204,10 @@ class AioHttpApi(AbstractAPI):
         query = parse_qs(req.rel_url.query_string)
         headers = req.headers
         body = None
+        form = None
         if req.body_exists:
             body = yield from req.read()
+            form = yield from req.post()
 
         return ConnexionRequest(url=url,
                                 method=req.method.lower(),
@@ -213,6 +215,7 @@ class AioHttpApi(AbstractAPI):
                                 query=query,
                                 headers=headers,
                                 body=body,
+                                form=form,
                                 json_getter=lambda: cls.jsonifier.loads(body),
                                 files={},
                                 context=req)
