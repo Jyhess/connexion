@@ -201,7 +201,7 @@ class AioHttpApi(AbstractAPI):
         logger.debug('Getting data and status code',
                      extra={'has_body': req.has_body, 'url': url})
 
-        query = parse_qs(req.rel_url.query_string)
+        query = parse_qs(req.rel_url.raw_query_string)
         headers = req.headers
         body = None
         form = None
